@@ -8,7 +8,7 @@ import { AccountService, AlertService } from '@app/_services';
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
     form!: FormGroup;
-    id?: string;
+    id?: number;
     title!: string;
     loading = false;
     submitting = false;
@@ -29,15 +29,17 @@ export class AddEditComponent implements OnInit {
         this.form = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            // password only required in add mode
-            password: ['', [Validators.minLength(6), ...(!this.id ? [Validators.required] : [])]]
+            employeeGender: ['', Validators.required],
+            employeePhone: ['', Validators.required],
+            employeeSalary: ['', Validators.required],
+           // department: ['', Validators.required],
         });
 
-        this.title = 'Add User';
+
+        this.title = 'Add Employee';
         if (this.id) {
             // edit mode
-            this.title = 'Edit User';
+            this.title = 'Edit Employee';
             this.loading = true;
             this.accountService.getById(this.id)
                 .pipe(first())
@@ -67,7 +69,7 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User saved', { keepAfterRouteChange: true });
+                    this.alertService.success('Employee saved', { keepAfterRouteChange: true });
                     this.router.navigateByUrl('/users');
                 },
                 error: error => {
@@ -81,6 +83,6 @@ export class AddEditComponent implements OnInit {
         // create or update user based on id param
         return this.id
             ? this.accountService.update(this.id!, this.form.value)
-            : this.accountService.register(this.form.value);
+            : this.accountService.addEmployee(this.form.value);
     }
 }

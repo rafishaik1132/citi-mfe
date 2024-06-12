@@ -15,11 +15,11 @@ export class ListComponent implements OnInit {
             .subscribe(users => this.users = users);
     }
 
-    deleteUser(id: string) {
-        const user = this.users!.find(x => x.id === id);
-        user.isDeleting = true;
-        this.accountService.delete(id)
+    deleteUser(data:any) {
+        const user = this.users!.find(x => x.id === data.employeeID);
+        console.log("users Data"+user);
+        this.accountService.delete(data.employeeID)
             .pipe(first())
-            .subscribe(() => this.users = this.users!.filter(x => x.id !== id));
+            .subscribe(() => this.users = this.users!.filter(x => x.id !== data.employeeID));
     }
 }
