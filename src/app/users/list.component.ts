@@ -6,6 +6,7 @@ import { AccountService } from '@app/_services';
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     users?: any[];
+    departments?: any[];
 
     constructor(private accountService: AccountService) {}
 
@@ -13,6 +14,10 @@ export class ListComponent implements OnInit {
         this.accountService.getAll()
             .pipe(first())
             .subscribe(users => this.users = users);
+            this.accountService.getAllDepartments()
+            .pipe(first())
+            .subscribe(departments => this.departments = departments);
+
     }
 
     deleteUser(data:any) {

@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 import { Employee } from '@app/_models/employee';
+import { Department } from '@app/_models/departments';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -48,19 +49,31 @@ export class AccountService {
 
 
     addEmployee(user: Employee) {
-        return this.http.post(`${environment.apiUrl}/auth/employees`, user);
+        return this.http.post(`${environment.apiUrl}/api/employees`, user);
     }
 
     getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/auth/employees`);
+        return this.http.get<User[]>(`${environment.apiUrl}/api/employees`);
     }
 
     getById(id: any) {
-        return this.http.get<Employee>(`${environment.apiUrl}/auth/employees/${id}`);
+        return this.http.get<Employee>(`${environment.apiUrl}/api/employees/${id}`);
     }
 
+
+    addDepartment(department: Department) {
+        return this.http.post(`${environment.apiUrl}/api/departments`, department);
+    }
+
+    getAllDepartments() {
+        return this.http.get<Department[]>(`${environment.apiUrl}/api/departments`);
+    }
+
+    getDepartmentById(id: any) {
+        return this.http.get<Department>(`${environment.apiUrl}/api/departments/${id}`);
+    }
     update(id: any, user: Employee) {
-        return this.http.put(`${environment.apiUrl}/auth/employees/${id}`, user)
+        return this.http.put(`${environment.apiUrl}/api/employees/${id}`, user)
             .pipe(map(x => {
                 // update stored user if the logged in user updated their own record
                 if (id == this.userValue?.id) {
@@ -75,8 +88,16 @@ export class AccountService {
             }));
     }
 
+    updateDepartment(id: any, department: Department) {
+        return this.http.put(`${environment.apiUrl}/api/departments/${id}`, department)
+            .pipe(map(x => {
+               
+                return x;
+            }));
+    }
+
     delete(id: number) {
-        return this.http.delete(`${environment.apiUrl}/auth/employees/${id}`)
+        return this.http.delete(`${environment.apiUrl}/api/employees/${id}`)
             .pipe(map(x => {
                 // auto logout if the logged in user deleted their own record
                 // if (id == this.userValue?.id) {

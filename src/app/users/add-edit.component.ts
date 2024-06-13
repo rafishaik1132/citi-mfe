@@ -13,6 +13,8 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitting = false;
     submitted = false;
+    departments?: any[];
+    departmentVal:any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -25,6 +27,10 @@ export class AddEditComponent implements OnInit {
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
 
+        this.accountService.getAllDepartments()
+        .pipe(first())
+        .subscribe(departments => this.departments = departments);
+
         // form with validation rules
         this.form = this.formBuilder.group({
             firstName: ['', Validators.required],
@@ -32,7 +38,7 @@ export class AddEditComponent implements OnInit {
             employeeGender: ['', Validators.required],
             employeePhone: ['', Validators.required],
             employeeSalary: ['', Validators.required],
-           // department: ['', Validators.required],
+            department: ['', Validators.required],
         });
 
 
@@ -50,6 +56,10 @@ export class AddEditComponent implements OnInit {
         }
     }
 
+    changeDepartment(e:any) {
+        this.departmentVal=e.target.value.split('|')[0];
+      }
+
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
@@ -58,6 +68,7 @@ export class AddEditComponent implements OnInit {
 
         // reset alerts on submit
         this.alertService.clear();
+        this.form.controls.department.setValue(this.departmentVal);
 
         // stop here if form is invalid
         if (this.form.invalid) {

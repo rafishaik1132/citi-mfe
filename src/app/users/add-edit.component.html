@@ -42,6 +42,13 @@
                 <div *ngIf="f.employeePhone.errors.required">Employee Phone Number is required</div>
             </div>
         </div>
+        <div class="mb-3 col">
+            <label class="form-label">Department</label>
+            <select class="custom-select" (change)="changeDepartment($event)" formControlName="department">
+              <option value="">Choose Department</option>
+              <option *ngFor="let dept of departments">{{dept.department_ID}}|{{dept.department_Name}}</option>
+            </select>
+            </div>
 
     </div>
     <div class="mb-3">

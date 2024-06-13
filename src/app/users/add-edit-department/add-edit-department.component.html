@@ -1,0 +1,30 @@
+<h1>{{title}}</h1>
+<form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="mb-3 col">
+            <label class="form-label">Department Name</label>
+            <input type="text" formControlName="department_Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.department_Name.errors }" />
+            <div *ngIf="submitted && f.department_Name.errors" class="invalid-feedback">
+                <div *ngIf="f.department_Name.errors.required">Department Name is required</div>
+            </div>
+        </div>
+        <div class="mb-3 col">
+            <label class="form-label">Short Name</label>
+            <input type="text" formControlName="short_Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.short_Name.errors }" />
+            <div *ngIf="submitted && f.short_Name.errors" class="invalid-feedback">
+                <div *ngIf="f.short_Name.errors.required">Short Name is required</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <button [disabled]="submitting" class="btn btn-primary">
+            <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+            Save Department
+        </button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+<div *ngIf="loading" class="text-center m-5">
+    <span class="spinner-border spinner-border-lg align-center"></span>
+</div>

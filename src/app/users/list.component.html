@@ -19,7 +19,7 @@
             <td>{{user.employeeGender}}</td>
             <td>{{user.employeePhone}}</td>
             <td>{{user.employeeSalary}}</td>
-            <td>{{user.department}}</td>
+            <td>{{user.department|json}}</td>
 
             <td style="white-space: nowrap">
                 <a routerLink="edit/{{user.employeeID}}" class="btn btn-sm btn-primary me-1">Edit</a>
@@ -34,5 +34,28 @@
                 <span class="spinner-border spinner-border-lg align-center"></span>
             </td>
         </tr>
-    </tbody>
+
+        <h1>Departments</h1>
+<a routerLink="addDepartment" class="btn btn-sm btn-success mb-2">Add Department</a>
+</tbody>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 50%">Department Name</th>
+            <th style="width: 50%">Short Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of departments">
+            <td>{{user.department_Name}}</td>
+            <td>{{user.short_Name}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="editDepartment/{{user.department_ID}}" class="btn btn-sm btn-primary me-1">Edit</a>
+              
+            </td>
+            </tr>
+            </tbody>
+
+
+</table>
 </table>
