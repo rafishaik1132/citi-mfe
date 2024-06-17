@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl(returnUrl);
                 },
                 error: error => {
-                    this.alertService.error("Please enter correct username");
+                    this.alertService.error("Please enter correct username and password.");
                     this.loading = false;
                 }
             });
